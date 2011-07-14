@@ -1,7 +1,7 @@
 draugiem.lv API implementation for JAVA. Supports usage in standard webapps and also Google App Engine.
 See META-INF/draugiem.propeties for configuration options
 
-When using with Google App Engine make sure all draugiem-api project dependencies are included and sessions are enabled appengine-web.xml
+When using with Google App Engine make sure all draugiem-api project dependencies are included and sessions are enabled in appengine-web.xml
 
 NOTE: this project is not yet fully tested!
 	
