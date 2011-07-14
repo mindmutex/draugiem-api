@@ -1,7 +1,7 @@
-<p>draugiem.lv API implementation for JAVA. Supports usage in standard webapps and also Google App Engine.</p>
-<p>See META-INF/draugiem.propeties for configuration options</p>
+draugiem.lv API implementation for JAVA. Supports usage in standard webapps and also Google App Engine.
+See META-INF/draugiem.propeties for configuration options
 
-<p>When using with Google App Engine make sure all draugiem-api project dependencies are included and sessions are enabled appengine-web.xml</p>
+When using with Google App Engine make sure all draugiem-api project dependencies are included and sessions are enabled appengine-web.xml
 
-<p>NOTE: this project is not yet fully tested!</p>
+NOTE: this project is not yet fully tested!
 	
