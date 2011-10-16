@@ -45,6 +45,11 @@ public class SessionData implements Serializable {
 	private String sessionKey;
 
 	/**
+	 * Domain in which the application  is opened.
+	 */
+	private String domain;
+
+	/**
 	 * Authenticated user language if any (otherwise defaults to "LV").
 	 */
 	private String language;
@@ -97,6 +102,14 @@ public class SessionData implements Serializable {
 
 	public User getUser() {
 		return user;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+	public String getDomain() {
+		return domain;
 	}
 
 	public void updateLastModified() {

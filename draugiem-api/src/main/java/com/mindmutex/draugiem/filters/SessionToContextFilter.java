@@ -61,7 +61,7 @@ public class SessionToContextFilter extends AbstractInnerFilter {
 			DraugiemContext.setConfiguration(getConfiguration());
 			DraugiemContext.setSession(sessionData);
 
-			logger.info("exposed session data to context");
+			logger.debug("exposed session data to context");
 		}
 	}
 }

@@ -73,6 +73,9 @@ public class DraugiemContext {
 	}
 
 	public static User getUser() {
+		if (getSession() == null) {
+			throw new IllegalStateException("session not bound");
+		}
 		return getSession().getUser();
 	}
 

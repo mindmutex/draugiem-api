@@ -47,6 +47,12 @@ public class Constants {
 	public static String HTTP_GET_LANGUAGE = "language";
 
 	/**
+	 * HTTP request parameter which provides the domain application
+	 * is opened in.
+	 */
+	public static String HTTP_GET_DOMAIN = "domain";
+
+	/**
 	 * Attribute name in session which will contain
 	 * {@link SessionData} instance.
 	 */

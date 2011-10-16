@@ -36,6 +36,7 @@ import com.mindmutex.draugiem.Constants;
 import com.mindmutex.draugiem.DraugiemHttpClient;
 import com.mindmutex.draugiem.DraugiemHttpClientFactory;
 import com.mindmutex.draugiem.SessionData;
+import com.mindmutex.draugiem.User;
 import com.mindmutex.draugiem.exceptions.DraugiemAuthenticationException;
 import com.mindmutex.draugiem.requests.AuthorizationRequest;
 import com.mindmutex.draugiem.requests.AuthorizationResponse;
@@ -69,13 +70,9 @@ public class AuthenticationFilter extends AbstractInnerFilter {
 
 			AuthorizationResponse authResponse = client.execute(new AuthorizationRequest(authorizationCode));
 			if (authResponse.isSuccessful()) {
-				String sessionHash = request.getParameter(Constants.HTTP_GET_SESSION_HASH);
-				String language = request.getParameter(Constants.HTTP_GET_LANGUAGE);
-
-				SessionData sessionData = new SessionData(
-					authorizationCode, authResponse.getApiKey(), sessionHash, language);
-				sessionData.setUser(authResponse.getUser());
-
+				// create session data and store in session
+				SessionData sessionData =
+					createSessionData(request, authResponse.getApiKey(), authResponse.getUser());
 				request.getSession().setAttribute(Constants.REQUEST_AUTH_ATTRIBUTE, sessionData);
 
 				logger.info("Authentication successful");
@@ -91,6 +88,30 @@ public class AuthenticationFilter extends AbstractInnerFilter {
 	}
 
 	/**
+	 * Creates instance of {@link SessionData} after the authentication is successful.
+	 * @param request HTTP request
+	 *
+	 * @param apiKey session API key
+	 * @param user authenticated user instance
+	 * @return session data that is stored in the session
+	 */
+	protected SessionData createSessionData(HttpServletRequest request, String apiKey, User user) {
+		String sessionHash = request.getParameter(Constants.HTTP_GET_SESSION_HASH);
+		String language = request.getParameter(Constants.HTTP_GET_LANGUAGE);
+		String authCode = request.getParameter(Constants.HTTP_GET_AUTH_CODE);
+
+		SessionData sessionData = new SessionData(authCode, apiKey, sessionHash, language);
+		sessionData.setUser(user);
+
+		String domainName = request.getParameter(Constants.HTTP_GET_DOMAIN);
+		if (domainName == null) {
+			domainName = "www.draugiem.lv";
+		}
+		sessionData.setDomain(domainName);
+		return sessionData;
+	}
+
+	/**
 	 * Check whether the authentication is required.
 	 *
 	 * @param request request
@@ -102,7 +123,7 @@ public class AuthenticationFilter extends AbstractInnerFilter {
 
 		String authCode = request.getParameter(Constants.HTTP_GET_AUTH_CODE);
 		if (data == null && authCode == null) {
-			throw new IllegalStateException(
+			throw new DraugiemAuthenticationException(
 				"expected " + Constants.HTTP_GET_AUTH_CODE + " in http request");
 		}
 		if (authCode != null

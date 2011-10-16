@@ -90,7 +90,7 @@ public class User implements Serializable {
 	}
 
 	public String getIcon() {
-		return getImage().replaceAll("/sm_", "/i_");
+		return getImage().replaceAll("/nm_", "/i_");
 	}
 
 	public String getImage() {
@@ -98,10 +98,10 @@ public class User implements Serializable {
 	}
 
 	public String getMediumImage() {
-		return getImage().replaceAll("/sm_", "/m_");
+		return getImage().replaceAll("/nm_", "/m_");
 	}
 
 	public String getLargeImage() {
-		return getImage().replaceAll("/sm_", "/l_");
+		return getImage().replaceAll("/nm_", "/l_");
 	}
 }
